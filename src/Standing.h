@@ -11,11 +11,8 @@
 #include "BomberManState.h"
 
 class Standing: public BomberManState {
-	float m_x;
 public:
-	Standing(float x);
-	virtual ~Standing();
-	BomberManState * update();
+	virtual BomberManState * update(Bomberman & bomberman);
 };
 
 #endif /* STANDING_H_ */

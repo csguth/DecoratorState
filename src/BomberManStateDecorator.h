@@ -10,13 +10,14 @@
 
 #include "BomberManState.h"
 
-class BomberManStateDecorator : public BomberManState {
+class BomberManStateDecorator: public BomberManState {
 protected:
 	BomberManState * m_decorated;
 public:
 	BomberManStateDecorator(BomberManState * decorated);
 	virtual ~BomberManStateDecorator();
-	virtual BomberManState * update();
+	virtual BomberManState * update(Bomberman & bomberman);
+	virtual BomberManState * handleInput(Bomberman & bomberman, const Input & input);
 };
 
 #endif /* BOMBERMANSTATEDECORATOR_H_ */

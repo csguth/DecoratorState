@@ -8,24 +8,19 @@
 #include "Standing.h"
 #include <SFML/Graphics.hpp>
 #include "Walking.h"
-
 #include <iostream>
+#include "Bomberman.h"
+#include <cmath>
 
-Standing::Standing(float x) :
-		m_x(x) {
-}
-
-Standing::~Standing() {
-}
-
-BomberManState* Standing::update() {
-	std::cout << "Standing::update" << std::endl;
-	std::cout << "   Press A to Walk" << std::endl;
-	BomberManState* next = this;
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		next = new Walking(m_x, m_x+10.f);
+BomberManState* Standing::update(Bomberman& bomberman) {
+	std::cout << "Standing::update (" << bomberman.body().velocityX() << ", "
+			<< bomberman.body().velocityY() << ")" << std::endl;
+	BomberManState* nextState = this;
+	static const double PRECISION = 0.0000001;
+	if (std::abs(bomberman.body().velocityX()) > PRECISION
+			|| std::abs(bomberman.body().velocityY()) > PRECISION) {
+		nextState = new Walking;
 		delete this;
 	}
-	return next;
+	return nextState;
 }

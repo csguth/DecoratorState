@@ -10,12 +10,11 @@
 
 #include "BomberManStateDecorator.h"
 
-class CarryingBomb : public BomberManStateDecorator {
+class CarryingBomb: public BomberManStateDecorator {
 	void releaseBomb();
 public:
 	CarryingBomb(BomberManState * bomberman);
-	virtual ~CarryingBomb();
-	BomberManState* update();
+	BomberManState * handleInput(Bomberman & bomberman, const Input & input);
 };
 
 #endif /* CARRYINGBOMB_H_ */

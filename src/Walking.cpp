@@ -7,20 +7,18 @@
 
 #include "Walking.h"
 #include "Standing.h"
-
+#include "Bomberman.h"
 #include <iostream>
-
-Walking::Walking(float x0, float xf) :
-		m_x0(x0), m_xf(xf), m_x(x0), m_velocity(0.1f) {
-}
-
-Walking::~Walking() {
-}
-
-BomberManState* Walking::update() {
-	std::cout << "Walking::update" << std::endl;
-	m_x += m_velocity;
-	if (m_x >= m_xf)
-		return new Standing(m_x);
-	return this;
+#include <cmath>
+BomberManState* Walking::update(Bomberman & bomberman) {
+	std::cout << "Walking::update (" << bomberman.body().velocityX() << ", "
+			<< bomberman.body().velocityY() << ")" << std::endl;
+	BomberManState* nextState = this;
+	static const double PRECISION = 0.0000001;
+	if (std::abs(bomberman.body().velocityX()) < PRECISION
+			&& std::abs(bomberman.body().velocityY()) < PRECISION) {
+		nextState = new Standing();
+		delete this;
+	}
+	return nextState;
 }

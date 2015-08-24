@@ -13,24 +13,20 @@ CarryingBomb::CarryingBomb(BomberManState* bomberman) :
 		BomberManStateDecorator(bomberman) {
 }
 
-CarryingBomb::~CarryingBomb() {
-}
-
 void CarryingBomb::releaseBomb() {
 	std::cout << "CarryingBomb::releaseBomb" << std::endl;
 }
 
-BomberManState* CarryingBomb::update() {
-	std::cout << "CarryingBomb::update" << std::endl;
-	std::cout << "   Press Space to Relase the Bomb" << std::endl;
-	BomberManStateDecorator::update();
-
-	BomberManState* next = this;
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+BomberManState* CarryingBomb::handleInput(Bomberman& bomberman, const Input & input) {
+	BomberManStateDecorator::handleInput(bomberman, input);
+	std::cout << "CarryingBomb::handleInput" << std::endl;
+		std::cout << "  press BOMB to release a bomb" << std::endl;
+	BomberManState* nextState = this;
+	if(input.bomb())
 	{
 		releaseBomb();
-		next = m_decorated;
+		nextState = m_decorated;
 		delete this;
 	}
-	return next;
+	return nextState;
 }

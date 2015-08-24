@@ -14,7 +14,13 @@ BomberManStateDecorator::BomberManStateDecorator(BomberManState* decorated) :
 BomberManStateDecorator::~BomberManStateDecorator() {
 }
 
-BomberManState* BomberManStateDecorator::update() {
-	m_decorated = m_decorated->update();
+BomberManState* BomberManStateDecorator::update(Bomberman& bomberman) {
+	m_decorated = m_decorated->update(bomberman);
+	return this;
+}
+
+BomberManState* BomberManStateDecorator::handleInput(Bomberman& bomberman,
+		const Input & input) {
+	m_decorated = m_decorated->handleInput(bomberman, input);
 	return this;
 }
